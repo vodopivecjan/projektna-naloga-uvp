@@ -1,5 +1,4 @@
 # import os
-import time
 import csv
 
 
@@ -8,11 +7,7 @@ from main.scraping.scrape import scrape_imdb_top_tv
 
 
 def main():
-    start = time.time()
     top_tv = scrape_imdb_top_tv()
-    end = time.time()
-    elapsed = end - start
-    print(f"Elapsed time: {elapsed} seconds")
 
     # print(os.getcwd())
 
@@ -24,5 +19,5 @@ def main():
 
     # for show in top_tv[:5]:
     #     print(
-    #         f"{show['title']}. {show['rank']} ({show['year_start']}) - {show['user_rating']} - {show['link']}"
+    #         f"{show['rank']}. {show['title']} ({show['year']}) - {show['rating']} - {show['url']}"
     #     )
