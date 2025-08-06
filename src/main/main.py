@@ -1,47 +1,69 @@
-# import os
-import time
+import json
 import csv
 
 
 from main.debug import execute_and_time, pp
 
-
-from main.vars import FIELDNAMES
-from main.scraping.scrape_imdb import scrape_imdb_top_tv
-from main.scraping.scrape_trakt import scrape_trakt_from_top_tv_data
-from main.scraping.scrape_wiki import find_scrape_wikipedia
 from main.cache.cache import save_cache, load_cache
 
-
-def get_top_shows_and_data_then_save_to_csv():
-    
-    # top_tv_imdb_data = execute_and_time(scrape_imdb_top_tv)
-    # save_cache("imdb_data_top_tv", top_tv_imdb_data)
-
-    imdb_data_top_tv = load_cache("imdb_data_top_tv")
-    # pp(imdb_data_top_tv)
-
-    data =  execute_and_time(scrape_trakt_from_top_tv_data, imdb_data_top_tv)
-    save_cache("full_data", data)
-    pp(data)
-
-    # # Save to CSV
-    # with open("../output/top_tv_shows.csv", "w", newline="", encoding="utf-8") as f:
-    #     writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
-    #     writer.writeheader()
-    #     writer.writerows(top_tv_data)
+from main.vars import OUTPUT_FOLDER_PATH
 
 
-def get_wiki_pages():
-    with open("../output/top_tv_shows.csv", newline="", encoding="utf-8") as csvfile:
-        data = list(csv.DictReader(csvfile))
+from main.scraping.scrape_imdb import scrape_imdb_toptv
+from main.scraping.scrape_trakt import scrape_trakt_from_data_imdb
+from main.scraping.scrape_wiki import scrape_wiki_from_data_imdb_trakt
 
-    for row in data:
-        find_scrape_wikipedia(row)
+
+def get_full_data_from_toptv_shows():
+    # # ## Scrape IMDB
+    # data_imdb = execute_and_time(scrape_imdb_toptv)
+    # save_cache("data_imdb", data_imdb)
+
+    # ## Scrape Trakt
+    data_imdb = load_cache("data_imdb")
+    # pp(data_imdb)
+
+    data_imdb_trakt = execute_and_time(scrape_trakt_from_data_imdb, data_imdb)
+    save_cache("data_imdb_trakt", data_imdb_trakt)
+    # pp(data_imdb_trakt)
+
+    # # ## Scrape Wikipedia
+    # data_imdb_trakt = load_cache("data_imdb_trakt")
+    # # pp(data_imdb_trakt)
+
+    # data_imdb_trakt_wiki = execute_and_time(
+    #     scrape_wiki_from_data_imdb_trakt, data_imdb_trakt
+    # )
+    # save_cache("data_imdb_trakt_wiki", data_imdb_trakt_wiki)
+    # pp(data_imdb_trakt_wiki)
+
+    # ## GET FINAL DATA
+    # final_data = data_imdb_trakt
+
+    final_data = data_imdb_trakt
+    # final_data = load_cache("data_imdb_trakt_wiki")
+
+    return final_data
 
 
 def main():
-    get_top_shows_and_data_then_save_to_csv()
-    # get_wiki_pages()
+    full_data = get_full_data_from_toptv_shows()
 
-    # # print(os.getcwd())
+    FULL_DATA_KEYS_TO_REMOVE = ["imdb_id", "trakt_title", "trakt_wiki_link"]
+
+    # strip the unecessary data used for debugging/acquiring data
+    for d in full_data:
+        for key in FULL_DATA_KEYS_TO_REMOVE:
+            d.pop(key, None)
+
+    # ## Write to JSON file
+    json_output_file = OUTPUT_FOLDER_PATH / "toptv_shows_full_data.json"
+    with open(json_output_file, "w", encoding="utf-8") as f:
+        json.dump(full_data, f, indent=4, ensure_ascii=False)
+
+    # ## Write to CSV file
+    csv_output_file = OUTPUT_FOLDER_PATH / "toptv_shows_full_data.csv"
+    with open(csv_output_file, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=full_data[0].keys())
+        writer.writeheader()
+        writer.writerows(full_data)

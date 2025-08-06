@@ -1,18 +1,13 @@
-TEMP_FOLDER_PATH = "../temp_storage"
+from pathlib import Path
 
-FIELDNAMES = [
-    "title",
-    "rank",
-    "ongoing",
-    "year_start",
-    "year_end",
-    "num_of_episodes",
-    "parental_rating",
-    "user_rating",
-    "user_votes_count",
-    "series_type",
-    "link",
-]
+# this is such that all filepaths should be relative from here
+THIS_FILE_DIRECTORY = Path(__file__).resolve().parent
+
+TEMP_FOLDER_PATH = THIS_FILE_DIRECTORY / "../../temp_storage"
+
+# DEBUG_FOLDER_PATH = THIS_FILE_DIRECTORY / "../../debug"
+
+OUTPUT_FOLDER_PATH = THIS_FILE_DIRECTORY / "../../output"
 
 BROWSER_LIKE_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",

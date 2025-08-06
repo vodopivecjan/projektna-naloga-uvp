@@ -1,168 +1,97 @@
-from pprint import pprint
+import requests
+
+from bs4 import BeautifulSoup
+
+# from main.debug import pp
+
+from main.vars import BROWSER_LIKE_HEADERS
 
 
-from ddgs import DDGS
+def scrape_wikipedia_page(series_data):
+    part_url = series_data["trakt_wiki_link"]
+    url = f"https://trakt.tv/{part_url}"
+    res = requests.get(url, headers=BROWSER_LIKE_HEADERS)
+    soup = BeautifulSoup(res.text, "html.parser")
 
-from wikipedia import wikipedia as wiki
+    # Find the infobox
+    infobox = soup.select_one("table.infobox.vevent")
 
-from wikipedia.exceptions import DisambiguationError, PageError
+    # Extract rows
+    rows = infobox.find_all("tr")
 
-
-def rank_results(row, results):
-    show_name_lower = row["title"].lower()
-    year_start = row["year_start"]
-
-    penalty_words = {
-        "season",
-        "episode",
-        "episodes",
-        "list of",
-        "series overview",
-        "film",
-        "franchise",
-        "category",
+    desired_keys = {
+        "wiki_created_by": ["Created by"],
+        "wiki_written_by": ["Written by"],
+        "wiki_executive_producers": ["Executive producers", "Executive producer"],
+        "wiki_producers": ["Producers", "Producer"],
+        "wiki_cinematography": ["Cinematography"],
+        "wiki_editors": ["Editors", "Editor"],
     }
-    boost_words = {"series", "tv"}
-    wikipedia_suffixes = [
-        " - simple english wikipedia, the free ...",
-        # " - wikipedia, the free encyclopedia"
-    ]
 
-    def clean_title(title):
-        title = title.lower()
-        for suffix in wikipedia_suffixes:
-            if title.endswith(suffix):
-                return title.removesuffix(suffix).strip()
-        return title
+    # Flatten all variants into a single set for fast matching
+    all_variants = set(k for variants in desired_keys.values() for k in variants)
 
-    def score(result):
-        title = clean_title(result["title"])
+    data = {}
+    for row in rows:
+        header = row.find("th")
+        value = row.find("td")
+        if header and value:
+            key_text = header.get_text(" ", strip=True)
+            if key_text in all_variants:
+                # If the value contains a <ul>, extract list items
+                ul = value.find("ul")
+                if ul:
+                    items = [li.get_text(" ", strip=True) for li in ul.find_all("li")]
+                    data[key_text] = items
+                else:
+                    # Otherwise, fallback to comma-splitting
+                    raw = value.get_text(" ", strip=True)
+                    items = [item.strip() for item in raw.split(",") if item.strip()]
+                    data[key_text] = items
 
-        # Lower weight on similarity
-        # ratio = difflib.SequenceMatcher(None, show_name_lower, title).ratio() * 0.6
+    # Utility: Get first matching key from variants
+    def get_value(data, variants):
+        for k in variants:
+            if k in data:
+                return data[k]
+        return "N.A."
 
-        # Heavier penalty for word count mismatch
-        word_penalty = abs(len(title.split()) - len(show_name_lower.split())) * 0.2
+    formatted_data = {
+        "wiki_created_by": get_value(data, desired_keys["wiki_created_by"]),
+        "wiki_written_by": get_value(data, desired_keys["wiki_written_by"]),
+        "wiki_executive_producers": get_value(
+            data, desired_keys["wiki_executive_producers"]
+        ),
+        "wiki_producers": get_value(data, desired_keys["wiki_producers"]),
+        "wiki_cinematography": get_value(data, desired_keys["wiki_cinematography"]),
+        "wiki_editors": get_value(data, desired_keys["wiki_editors"]),
+    }
 
-        # Penalty if unwanted words in title
-        has_penalty = any(w in title for w in penalty_words)
-        penalty = word_penalty + (0.5 if has_penalty else 0)
+    if formatted_data.get("wiki_written_by") is not None:
+        print(f"wiki_written_by found in wiki of {series_data['imdb_title']}.")
 
-        # Boosts for keywords
-        boost = 0
-        if any(w in title for w in boost_words):
-            boost += 0.4
-
-        # Boost for year
-        if year_start in title:
-            boost += 1
-
-        if year_start in result["body"]:
-            boost += 1
-
-        # return ratio - penalty + boost
-
-    return sorted(results, key=score, reverse=True)
-
-
-def find_wikipedia_page(row):
-    show_name = row["title"]
-    year_start = row["year_start"]
-    # show_imdb_link= row["link"]
-
-    try:
-        # intitle:{show_name} site:wikipedia.com -episodes -season TV Series
-        search_query = f'en.wikipedia.org "{show_name}" TV Series {year_start}'
-
-        # Perform the search using DDGS().text() and limit to one result.
-        # Ensure 'region' is set for more relevant results if needed, e.g., 'wt-en-si' for English in Slovenia.
-        results = DDGS().text(search_query, backend="google", max_results=13)
-
-        filtered_results = []
-        for result in results:
-            url = result.get("href")
-
-            if "simple.wikipedia.org" in url:
-                url = url.replace("simple.wikipedia.org", "en.wikipedia.org")
-
-            if "en.wikipedia.org" in result:
-                filtered_results.append(result)
-
-        results = rank_results(row, results)
-
-        pprint(results)
-
-        if results:
-            for result in results:
-                # Add an extra check to ensure the URL actually belongs to Wikipedia
-                if url and "en.wikipedia.org" in url:
-                    if all(
-                        substr not in url.lower() for substr in ("list_of", "episodes")
-                    ):
-                        return url
-        else:
-            return None  # No results found for the query
-    except Exception as e:
-        print(f"An error occurred during DuckDuckGo search: {e}")
-        return None
+    return formatted_data
 
 
-def find_scrape_wikipedia(row):
-    show_name = row["title"]
-    year_start = row["year_start"]
-    rank = row["rank"]
+def scrape_wiki_from_data_imdb_trakt(data_imdb_trakt):
+    data = []
 
-    # if show_name != "Band of Brothers":
-    #     return
-    # time.sleep(3)
-    print()
-    print()
-    url = find_wikipedia_page(row)
-    print(rank, show_name, year_start)
-    print(url)
+    for i, series_data in enumerate(data_imdb_trakt):
+        if i > 5:
+            # ## DEMO
+            # return data
+            pass
 
-    # print(url)
+        imdb_title = series_data["imdb_title"]
+        try:
+            print(f"Started scraping Wikipedia for IMDB title: {imdb_title}")
+            wiki_data = scrape_wikipedia_page(series_data)
+            series_data.update(wiki_data)
+            data.append(series_data)
+        except Exception:
+            print(
+                f"\nError: Something went wrong when scraping Wikipedia page for title {imdb_title}.\n"
+            )
+            raise
 
-    # show_name = row["title"]
-    # show_imdb_link= row["link"]
-
-    # print()
-    # print(show_name, show_imdb_link)
-    # titles = wiki.search(show_name)
-
-    # pprint(titles)
-
-    # sorted_titles = sorted(titles, key=lambda s: "series" not in s.lower())
-
-    # pprint(sorted_titles)
-
-    # page_found = False
-    # for title in sorted_titles:
-    #     try:
-    #         page = wiki.page(title, auto_suggest=False)
-    #         html = page.html()  # get raw HTML from wikipedia module
-
-    #         print(html)
-    #         # soup = BeautifulSoup(html, "html.parser")
-
-    #         # # Look for IMDb links anywhere on the page
-    #         # for a in soup.find_all("a", href=True):
-    #         #     if show_imdb_link in a["href"]:
-    #         #         print(True)
-    #         #         page_found = True
-    #         #         break
-
-    #         # if page_found:
-    #         #     break
-    #     except PageError:
-    #         continue
-    #     except DisambiguationError as e:
-    #         # Handle disambiguation pages, try to find a more specific link
-    #         print(f"Disambiguation page for {title}")
-    #         for option in e.options:
-    #             if title.lower() in option.lower() and ("tv series" in option.lower() or "television series" in option.lower()):
-    #                 try:
-    #                     page = wiki.page(option, auto_suggest=False)
-    #                     return page.url
-    #                 except (PageError, DisambiguationError):
-    #                     continue
+    return data

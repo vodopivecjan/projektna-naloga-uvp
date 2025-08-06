@@ -4,7 +4,6 @@ from pathlib import Path
 from main.vars import TEMP_FOLDER_PATH
 
 
-
 def save_cache(cache_name, data):
     cache_file = Path(TEMP_FOLDER_PATH) / f"{cache_name}.pkl"
     with open(cache_file, "wb") as f:
@@ -16,3 +15,8 @@ def load_cache(cache_name):
     if cache_file.exists():
         with open(cache_file, "rb") as f:
             return pickle.load(f)
+    else:
+        raise FileNotFoundError(
+            f"Error: The cache file at '{cache_file.resolve()}' was not found.\n"
+            "Maybe it has been saved wrong."
+        )

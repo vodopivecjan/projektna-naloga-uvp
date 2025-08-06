@@ -95,6 +95,20 @@ wheels = [
 ]
 
 [[package]]
+name = "decompyle3"
+version = "3.9.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "spark-parser" },
+    { name = "xdis" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1e/f2/1045f996c6806a8e53aea38e66c3ae0cab4c337f7029b6932224f20a7d29/decompyle3-3.9.2.tar.gz", hash = "sha256:bf4a177c5d53bd764496709fe60ea351103efc01b921c596382af9a7ee0433f3", size = 869783, upload-time = "2024-07-22T15:24:01.587Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/db/f5/f8a5d91f3a12dfacb88abcf3a711d29b14bf9c3e3633751eed9ad9736fc9/decompyle3-3.9.2-py3-none-any.whl", hash = "sha256:77cc6b17a9866b525d2ddf64e1ddb2b4a1f59b97e809ef0913193e406dc173ef", size = 272517, upload-time = "2024-07-22T15:23:59.904Z" },
+]
+
+[[package]]
 name = "greenlet"
 version = "3.2.3"
 source = { registry = "https://pypi.org/simple" }
@@ -199,6 +213,11 @@ dependencies = [
     { name = "wikipedia" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "decompyle3" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.13.4" },
@@ -208,6 +227,9 @@ requires-dist = [
     { name = "requests", specifier = ">=2.32.4" },
     { name = "wikipedia", specifier = ">=1.4.0" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "decompyle3", specifier = ">=3.9.2" }]
 
 [[package]]
 name = "pyee"
@@ -237,12 +259,34 @@ wheels = [
 ]
 
 [[package]]
+name = "six"
+version = "1.17.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031, upload-time = "2024-12-04T17:35:28.174Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050, upload-time = "2024-12-04T17:35:26.475Z" },
+]
+
+[[package]]
 name = "soupsieve"
 version = "2.7"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/3f/f4/4a80cd6ef364b2e8b65b15816a843c0980f7a5a2b4dc701fc574952aa19f/soupsieve-2.7.tar.gz", hash = "sha256:ad282f9b6926286d2ead4750552c8a6142bc4c783fd66b0293547c8fe6ae126a", size = 103418, upload-time = "2025-04-20T18:50:08.518Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e7/9c/0e6afc12c269578be5c0c1c9f4b49a8d32770a080260c333ac04cc1c832d/soupsieve-2.7-py3-none-any.whl", hash = "sha256:6e60cc5c1ffaf1cebcc12e8188320b72071e922c2e897f737cadce79ad5d30c4", size = 36677, upload-time = "2025-04-20T18:50:07.196Z" },
+]
+
+[[package]]
+name = "spark-parser"
+version = "1.8.9"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d4/ec/eb81227524ce6991cb2ea0e5570804b569c118e6ceb58d205059b6777fda/spark_parser-1.8.9.tar.gz", hash = "sha256:a7bb97b97953fb8bf0cd8158d820b6467ef1e7f747738e82248ae4c824f1e25a", size = 118345, upload-time = "2019-07-29T01:07:14.049Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e1/c3/745adc57618998882a6e120cedebfba6ebf76aa9052c8b89e49c0fe47c2e/spark_parser-1.8.9-py3-none-any.whl", hash = "sha256:e4d366116268010100f054ebda99b3b880c64e4b0aa3d58629ec79e6d033b077", size = 17985, upload-time = "2019-07-29T01:07:12.471Z" },
+    { url = "https://files.pythonhosted.org/packages/49/14/d2e92845c424583a14a2ddd44d46dd0ca176e7a8cacd06095e5c0877d0cd/spark_parser-1.8.9-py38-none-any.whl", hash = "sha256:0a96852dacfbe3a267bba6c9ebc1fcab8904158a5045107267e310e8d18919e5", size = 18048, upload-time = "2019-11-17T03:02:35.244Z" },
 ]
 
 [[package]]
@@ -293,3 +337,17 @@ dependencies = [
     { name = "requests" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/67/35/25e68fbc99e672127cc6fbb14b8ec1ba3dfef035bf1e4c90f78f24a80b7d/wikipedia-1.4.0.tar.gz", hash = "sha256:db0fad1829fdd441b1852306e9856398204dc0786d2996dd2e0c8bb8e26133b2", size = 27748, upload-time = "2014-11-15T15:59:49.808Z" }
+
+[[package]]
+name = "xdis"
+version = "6.1.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/65/25/d95146fa63bf8065e992d96312c763980b3e1748c55c37437d5416639be0/xdis-6.1.5.tar.gz", hash = "sha256:4c62219376e671f03db4747e1249e2a7fde10dc4edffbcb19730fd94b63feeb3", size = 463577, upload-time = "2025-07-25T19:34:06.463Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/07/f6/6681fc5043bf12be2529c90f12d8c02b6f9c341e62d2879b52194f38c7dc/xdis-6.1.5-py311-none-any.whl", hash = "sha256:ed18274c42d522b6cd100de262b45417a095b4b3eecedcc5020dbffe03f3816e", size = 184129, upload-time = "2025-07-25T19:33:19.512Z" },
+    { url = "https://files.pythonhosted.org/packages/5e/39/dd0df90f4a763821632d373b2f5f834e1321b48d1345ffa8b46a83cccf71/xdis-6.1.5-py313-none-any.whl", hash = "sha256:f4e5639045480b148601909de5e009637ff6f6a9a97ecc3f215dfc620f08e024", size = 191170, upload-time = "2025-07-25T19:33:11.357Z" },
+]
