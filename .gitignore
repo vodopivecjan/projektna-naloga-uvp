@@ -11,5 +11,5 @@ wheels/
 
 # CUSTOM
 .vscode
+/tests
 
-temp/

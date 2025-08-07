@@ -39,21 +39,21 @@ def slugify(text):
 def scrape_trakt_page(series_data, iteration):
     # ## BACKUP IF NO TRAKT PAGE IS FOUND OR MISSING DATA
     trakt_data = {
-        "trakt_title": "N.A",
-        "trakt_rating_imdb": "N.A",
-        "trakt_vote_count_imdb": "N.A",
-        "trakt_full_runtime_min": "N.A",
-        "trakt_avg_ep_runtime_min": "N.A",
-        "trakt_networks": "N.A",
-        "trakt_country_of_origin": "N.A",
-        "trakt_genres": "N.A",
-        "trakt_studios": "N.A",
-        "trakt_creators": "N.A",
-        "trakt_num_of_episodes": "N.A",
-        "trakt_num_of_seasons": "N.A",
-        "trakt_series_regulars": "N.A",
-        "trakt_guest_stars": "N.A",
-        "trakt_wiki_link": "N.A",
+        "trakt_title": "N.A.",
+        "trakt_rating_imdb": "N.A.",
+        "trakt_vote_count_imdb": "N.A.",
+        "trakt_full_runtime_min": "N.A.",
+        "trakt_avg_ep_runtime_min": "N.A.",
+        "trakt_networks": "N.A.",
+        "trakt_country_of_origin": "N.A.",
+        "trakt_genres": "N.A.",
+        "trakt_studios": "N.A.",
+        "trakt_creators": "N.A.",
+        "trakt_num_of_episodes": "N.A.",
+        "trakt_num_of_seasons": "N.A.",
+        "trakt_series_regulars": "N.A.",
+        "trakt_guest_stars": "N.A.",
+        "trakt_wiki_link": "N.A.",
     }
 
     # ## CHECK IF THE PAGE CAN BE SCRAPED
@@ -271,7 +271,7 @@ def scrape_trakt_page(series_data, iteration):
     for key in trakt_data:
         if key in local_vars:
             val = local_vars[key]
-            if val is not None and val != "N.A":
+            if val is not None and val != "N.A.":
                 trakt_data[key] = local_vars[key]
 
     return trakt_data
