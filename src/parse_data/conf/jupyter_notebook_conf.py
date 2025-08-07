@@ -12,6 +12,8 @@ if ipython is not None:
     with redirect_stdout(io.StringIO()):
         ipython.run_line_magic("load_ext", "autoreload")  # it is already loaded
     ipython.run_line_magic("autoreload", "2")
+    ipython.run_line_magic("matplotlib", "inline")
+    
 
 
 from IPython.extensions.autoreload import DeduperReloader  # noqa: E402
