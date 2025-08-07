@@ -10,6 +10,8 @@ DEBUG_FOLDER_PATH.mkdir(parents=True, exist_ok=True)
 
 OUTPUT_FOLDER_PATH = THIS_FILE_DIRECTORY / "../../../output"
 
+CACHE_NAMES_SORTED = ["data_imdb_trakt_wiki", "data_imdb_trakt", "data_imdb"]
+
 BROWSER_LIKE_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate",

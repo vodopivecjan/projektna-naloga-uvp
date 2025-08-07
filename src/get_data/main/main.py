@@ -4,9 +4,9 @@ import csv
 
 from main.debug import execute_and_time
 
-from main.cache.cache import save_cache, load_cache
+from main.cache.cache import save_cache, load_cache, delete_cache_no_error
 
-from main.vars import OUTPUT_FOLDER_PATH
+from main.vars import OUTPUT_FOLDER_PATH, CACHE_NAMES_SORTED
 
 
 from main.scraping.scrape_imdb import scrape_imdb_toptv
@@ -15,16 +15,18 @@ from main.scraping.scrape_wiki import scrape_wikipedia_from_data_imdb_trakt
 
 
 def get_biggest_stored_dataset():
-    for name in ["data_imdb_trakt_wiki", "data_imdb_trakt", "data_imdb"]:
+    for name in CACHE_NAMES_SORTED:
         try:
-            print(name)
             return load_cache(name)
         except FileNotFoundError:
             continue
     return []
 
 
-def get_full_data_from_toptv_shows():
+def get_full_data_from_toptv_shows(fresh=False):
+    if fresh:
+        delete_cache_no_error(CACHE_NAMES_SORTED)
+
     # ## Scrape IMDB
     data = get_biggest_stored_dataset()
     data_imdb = execute_and_time(scrape_imdb_toptv, data)
@@ -47,6 +49,7 @@ def get_full_data_from_toptv_shows():
 
 
 def main():
+    # full_data = get_full_data_from_toptv_shows(fresh=True)
     full_data = get_full_data_from_toptv_shows()
 
     FULL_DATA_KEYS_TO_REMOVE = ["imdb_id", "trakt_title", "trakt_wiki_link"]

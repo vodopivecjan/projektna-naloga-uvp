@@ -20,3 +20,9 @@ def load_cache(cache_name):
             f"Error: The cache file at '{cache_file.resolve()}' was not found.\n"
             "Maybe it has been saved wrong."
         )
+
+def delete_cache_from_list_no_error(caches_list):
+    for cache_name in caches_list:
+        cache_file = Path(TEMP_FOLDER_PATH) / f"{cache_name}.pkl"
+        cache_file.unlink(missing_ok=True)
+        
