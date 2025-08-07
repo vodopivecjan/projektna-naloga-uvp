@@ -1,11 +1,11 @@
 import re
 import requests
-import re
-
 
 from bs4 import BeautifulSoup
 
 from main.vars import BROWSER_LIKE_HEADERS
+
+from main.scraping.scraping_shared import for_loop_scrape_logic
 
 
 def parse_and_format_number(s, trakt_title):
@@ -36,8 +36,8 @@ def slugify(text):
     return text
 
 
-def scrape_trakt_page(series_data):
-    # ## BACKUP IF NO TRAKT PAGE IS FOUND
+def scrape_trakt_page(series_data, iteration):
+    # ## BACKUP IF NO TRAKT PAGE IS FOUND OR MISSING DATA
     trakt_data = {
         "trakt_title": "N.A",
         "trakt_rating_imdb": "N.A",
@@ -56,50 +56,65 @@ def scrape_trakt_page(series_data):
         "trakt_wiki_link": "N.A",
     }
 
-    imdb_id = series_data["imdb_id"]
-    imdb_ongoing = series_data["imdb_ongoing"]
-    imdb_title = series_data["imdb_title"]
-    imdb_year_start = series_data["imdb_year_start"]
+    # ## CHECK IF THE PAGE CAN BE SCRAPED
+    required_keys = ["imdb_id", "imdb_ongoing", "imdb_title", "imdb_year_start"]
+    try:
+        imdb_id = series_data["imdb_id"]
+        imdb_ongoing = series_data["imdb_ongoing"]
+        imdb_title = series_data["imdb_title"]
+        imdb_year_start = series_data["imdb_year_start"]
+    except KeyError:
+        missing_keys = [key for key in required_keys if key not in series_data]
+        print(
+            f"\nError: Missing required key(s): {', '.join(f"'{key}'" for key in missing_keys)}\n"
+            "These are needed when scraping Trakt.\n"
+            "This likely means the IMDB Top TV data has not been scraped yet.\n"
+            "Make sure to run the IMDB Top TV scraping before attempting Trakt scraping.\n"
+        )
+        raise
 
     url = f"https://trakt.tv/search/imdb/{imdb_id}"
     res = requests.get(url, headers=BROWSER_LIKE_HEADERS)
     soup = BeautifulSoup(res.text, "html.parser")
 
     # ## CHECK IF THERE IS A MOVIE AND A SERIES OR MULTIPLE SERIES WITH THE SAME IMDB ID
-    # If redirected, the final URL is the show page
+    # If you get correctly redirected to the show page, the final URL contains /shows/
     if "/shows/" not in res.url:
         soup = BeautifulSoup(res.text, "html.parser")
 
         results = soup.find_all("div", attrs={"data-type": "show"})
 
-        if len(results) == 0:
+        possible_show_links = []
+        for show_div in results:
+            possible_show_links.append(show_div.get("data-url", "").strip(" /"))
+
+        if len(possible_show_links) == 0:
             # there is no trakt page for the searched show from imdb
             return trakt_data
-        elif len(results) == 1:
-            show_div = results[0]
-            show_part_link = show_div.get("data-url", "").strip(" /")
+        elif len(possible_show_links) == 1:
+            show_part_link = possible_show_links[0]
         else:
+            show_part_link = None
             slug_imdb_title = slugify(imdb_title)
-            for show_div in results:
-                show_part_link = show_div.get("data-url", "").strip(" /")
-                slug_show_part_link = slugify(show_part_link)
-                if (
-                    show_part_link.endswith(f"-{imdb_year_start}")
-                    or slug_imdb_title in slug_show_part_link
-                ):
-                    break
-            else:
-                # This else runs only if the for loop didn’t break (no match)
-                raise RuntimeError(
-                    "\nError: Multiple show links were found under the same \n"
-                    f"IMDB ID ({imdb_id}) and title ({imdb_title}),\n"
-                    f"but none of them ended with the expected year: -{imdb_year_start}\n"
-                    "or contained the IMDB title"
-                )
 
-        show_url = f"https://trakt.tv/{show_part_link}"
+            for possible_show_link in possible_show_links:
+                if possible_show_link.endswith(f"-{imdb_year_start}"):
+                    show_part_link = possible_show_link
+                    break  # priority match - exit immediately
+                else:
+                    slug_possible_show_link = slugify(
+                        possible_show_link.removeprefix("shows/")
+                    )
+                    if slug_imdb_title == slug_possible_show_link:
+                        show_part_link = possible_show_link  # possible match - save it, but keep looping
+            if not show_part_link:
+                # could find the correct trakt page from imdb_id
+                return trakt_data
+
+        actual_show_url = f"https://trakt.tv/{show_part_link}"
+
         # Redo the request and define new soup now actaully the show's page
-        res = requests.get(show_url, headers=BROWSER_LIKE_HEADERS)
+        res = requests.get(actual_show_url, headers=BROWSER_LIKE_HEADERS)
         soup = BeautifulSoup(res.text, "html.parser")
 
     # ## Title
@@ -252,7 +267,7 @@ def scrape_trakt_page(series_data):
     # Take snapshot of locals once
     local_vars = locals()
 
-    # Update trakt_data keys if matching local variables exist (and not None)
+    # Update trakt_data keys if matching local variables exist (and not None and not "N.A.")
     for key in trakt_data:
         if key in local_vars:
             val = local_vars[key]
@@ -262,25 +277,10 @@ def scrape_trakt_page(series_data):
     return trakt_data
 
 
-def scrape_trakt_from_data_imdb(data_imdb):
-    data = []
-
-    for i, series_data in enumerate(data_imdb):
-        if i > 5:
-            # ## DEMO
-            # return data
-            pass
-        imdb_title = series_data["imdb_title"]
-
-        try:
-            print(f"Started scraping Trakt for IMDB title: {imdb_title}")
-            trakt_data = scrape_trakt_page(series_data)
-            series_data.update(trakt_data)
-            data.append(series_data)
-        except Exception:
-            print(
-                f"\nError: Something went wrong when scraping Trakt page for title {imdb_title}.\n"
-            )
-            raise
-
-    return data
+def scrape_trakt_from_data_imdb(data):
+    # id_whitelist = ["tt1533395"] # Life 2009 series also has a movie with same imdb id
+    # id_whitelist = ["tt1628033"] # Top Gear 2002 series also has a korean version with same imdb id
+    id_whitelist = []
+    return for_loop_scrape_logic(
+        "trakt", scrape_trakt_page, data, id_whitelist=id_whitelist
+    )

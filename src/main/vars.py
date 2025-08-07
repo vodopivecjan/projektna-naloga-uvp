@@ -5,7 +5,8 @@ THIS_FILE_DIRECTORY = Path(__file__).resolve().parent
 
 TEMP_FOLDER_PATH = THIS_FILE_DIRECTORY / "../../temp_storage"
 
-# DEBUG_FOLDER_PATH = THIS_FILE_DIRECTORY / "../../debug"
+DEBUG_FOLDER_PATH = THIS_FILE_DIRECTORY / "../../debug"
+DEBUG_FOLDER_PATH.mkdir(parents=True, exist_ok=True)
 
 OUTPUT_FOLDER_PATH = THIS_FILE_DIRECTORY / "../../output"
 

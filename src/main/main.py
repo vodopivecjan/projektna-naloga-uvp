@@ -11,37 +11,37 @@ from main.vars import OUTPUT_FOLDER_PATH
 
 from main.scraping.scrape_imdb import scrape_imdb_toptv
 from main.scraping.scrape_trakt import scrape_trakt_from_data_imdb
-from main.scraping.scrape_wiki import scrape_wiki_from_data_imdb_trakt
+from main.scraping.scrape_wiki import scrape_wikipedia_from_data_imdb_trakt
+
+
+def get_biggest_stored_dataset():
+    for name in ["data_imdb_trakt_wiki", "data_imdb_trakt", "data_imdb"]:
+        try:
+            print(name)
+            return load_cache(name)
+        except FileNotFoundError:
+            continue
+    return []
 
 
 def get_full_data_from_toptv_shows():
-    # # ## Scrape IMDB
-    # data_imdb = execute_and_time(scrape_imdb_toptv)
-    # save_cache("data_imdb", data_imdb)
+    # ## Scrape IMDB
+    data = get_biggest_stored_dataset()
+    data_imdb = execute_and_time(scrape_imdb_toptv, data)
+    save_cache("data_imdb", data_imdb)
 
-    # ## Scrape Trakt
-    data_imdb = load_cache("data_imdb")
-    # pp(data_imdb)
-
-    data_imdb_trakt = execute_and_time(scrape_trakt_from_data_imdb, data_imdb)
+    ## Scrape Trakt
+    data = get_biggest_stored_dataset()
+    data_imdb_trakt = execute_and_time(scrape_trakt_from_data_imdb, data)
     save_cache("data_imdb_trakt", data_imdb_trakt)
-    # pp(data_imdb_trakt)
 
-    # # ## Scrape Wikipedia
-    # data_imdb_trakt = load_cache("data_imdb_trakt")
-    # # pp(data_imdb_trakt)
-
-    # data_imdb_trakt_wiki = execute_and_time(
-    #     scrape_wiki_from_data_imdb_trakt, data_imdb_trakt
-    # )
-    # save_cache("data_imdb_trakt_wiki", data_imdb_trakt_wiki)
-    # pp(data_imdb_trakt_wiki)
+    ## Scrape Wikipedia
+    data = get_biggest_stored_dataset()
+    data_imdb_trakt_wiki = execute_and_time(scrape_wikipedia_from_data_imdb_trakt, data)
+    save_cache("data_imdb_trakt_wiki", data_imdb_trakt_wiki)
 
     # ## GET FINAL DATA
-    # final_data = data_imdb_trakt
-
-    final_data = data_imdb_trakt
-    # final_data = load_cache("data_imdb_trakt_wiki")
+    final_data = get_biggest_stored_dataset()
 
     return final_data
 
@@ -54,7 +54,8 @@ def main():
     # strip the unecessary data used for debugging/acquiring data
     for d in full_data:
         for key in FULL_DATA_KEYS_TO_REMOVE:
-            d.pop(key, None)
+            if key in d:
+                d.pop(key, None)
 
     # ## Write to JSON file
     json_output_file = OUTPUT_FOLDER_PATH / "toptv_shows_full_data.json"

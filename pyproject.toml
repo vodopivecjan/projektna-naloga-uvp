@@ -13,11 +13,11 @@ dependencies = [
   "wikipedia>=1.4.0",
 ]
 
-[tool.ruff.lint]
-ignore = ["F401"]  # allow unused imports
+# [tool.ruff.lint]
+# ignore = ["F401"]  # allow unused imports
 
-[dependency-groups]
-dev = [
-    "decompyle3>=3.9.2",
-]
+# [dependency-groups]
+# dev = [
+#     "decompyle3>=3.9.2",
+# ]
 

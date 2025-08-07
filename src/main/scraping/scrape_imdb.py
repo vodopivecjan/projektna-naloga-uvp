@@ -1,14 +1,14 @@
 from playwright.sync_api import sync_playwright
 
 
-def scrape_entry_toptv(i, item):
+def scrape_entry_toptv(item, iteration):
     # ## Title
     imdb_title = (
         item.query_selector("h3.ipc-title__text").inner_text().split(". ", 1)[-1]
     )
 
     # ## Rank
-    imdb_rank_toptv = i
+    imdb_rank_toptv = iteration + 1
 
     # ## IMDB id from link
     link_tag = item.query_selector("a.ipc-title-link-wrapper")
@@ -78,8 +78,12 @@ def scrape_entry_toptv(i, item):
     }
 
 
-def scrape_imdb_toptv():
-    data_imdb_toptv = []
+def scrape_imdb_toptv(optional_data=False):
+    # ## This program is created so that you can pass your
+    # ## data object anywhere and it will just update entires
+    # ## meaning you can update data only for specific entries
+    # ## and leave everything else unchanged
+    data_imdb_toptv = optional_data if optional_data else []
 
     with sync_playwright() as p:
         browser = p.firefox.launch(headless=True)  # Set to False if you want to see it
@@ -89,20 +93,26 @@ def scrape_imdb_toptv():
 
         # wait for all list items to load
         list_item_css_query = "ul.ipc-metadata-list > li"
-
         page.wait_for_selector(list_item_css_query)
-
         items = page.query_selector_all(list_item_css_query)
 
-        for i, item in enumerate(items, 1):
+        print("\nStarted scraping IMDB top tv.")
+
+        for i, item in enumerate(items):
             try:
-                data = scrape_entry_toptv(i, item)
-                data_imdb_toptv.append(data)
+                print(f"Started scraping IMDB top tv card for index: '{i + 1}'.")
+                scraped_data = scrape_entry_toptv(item, i)
+                if optional_data and i < len(data_imdb_toptv):
+                    data_imdb_toptv[i].update(scraped_data)
+                else:
+                    data_imdb_toptv.append(scraped_data)
             except Exception:
                 print(
-                    f"\nError: Something went wrong when scraping IMDB top tv page for index {i}.\n"
+                    f"\nError: Something went wrong when scraping IMDB top tv page for index '{i + 1}'.\n"
                 )
                 raise
+
+        print("\nStopped scraping IMDB top tv.")
 
         browser.close()
 

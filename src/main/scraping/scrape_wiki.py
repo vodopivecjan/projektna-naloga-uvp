@@ -4,17 +4,53 @@ from bs4 import BeautifulSoup
 
 # from main.debug import pp
 
+
 from main.vars import BROWSER_LIKE_HEADERS
 
+from main.scraping.scraping_shared import for_loop_scrape_logic
 
-def scrape_wikipedia_page(series_data):
-    part_url = series_data["trakt_wiki_link"]
+def scrape_wikipedia_page(series_data, iteration):
+    # ## BACKUP IF NO WIKIPEDIA PAGE IS FOUND OR MISSING DATA
+    default_wiki_data = {
+        "wiki_created_by": "N.A.",
+        "wiki_written_by": "N.A.",
+        "wiki_executive_producers": "N.A.",
+        "wiki_producers": "N.A.",
+        "wiki_cinematography": "N.A.",
+        "wiki_editors": "N.A.",
+    }
+
+    # ## CHECK IF THE PAGE CAN BE SCRAPED
+    try:
+        part_url = series_data["trakt_wiki_link"]
+    except KeyError:
+        print(
+            "\nError: Missing required key: 'trakt_wiki_link'\n"
+            "This key is required when scraping Wikipedia.\n"
+            "This likely means the Trakt data has not been scraped yet.\n"
+            "Make sure to run the Trakt scraping before attempting Trakt Wikipedia.\n"
+        )
+        raise
+
     url = f"https://trakt.tv/{part_url}"
+
     res = requests.get(url, headers=BROWSER_LIKE_HEADERS)
+
+    # ## ensure that the current page is wikipedia
+    # ## and if it isnt then follow html redirects
+    # ## until it is or the max_hops is reached
+    if "en.wikipedia.org" not in res.url:
+        # no wikipedia page found so just return default data
+        return default_wiki_data
+
     soup = BeautifulSoup(res.text, "html.parser")
 
     # Find the infobox
     infobox = soup.select_one("table.infobox.vevent")
+    if not infobox:
+        infobox = soup.select_one("table.infobox")
+    if not infobox:
+        return default_wiki_data
 
     # Extract rows
     rows = infobox.find_all("tr")
@@ -67,31 +103,13 @@ def scrape_wikipedia_page(series_data):
         "wiki_editors": get_value(data, desired_keys["wiki_editors"]),
     }
 
-    if formatted_data.get("wiki_written_by") is not None:
-        print(f"wiki_written_by found in wiki of {series_data['imdb_title']}.")
-
     return formatted_data
 
 
-def scrape_wiki_from_data_imdb_trakt(data_imdb_trakt):
-    data = []
-
-    for i, series_data in enumerate(data_imdb_trakt):
-        if i > 5:
-            # ## DEMO
-            # return data
-            pass
-
-        imdb_title = series_data["imdb_title"]
-        try:
-            print(f"Started scraping Wikipedia for IMDB title: {imdb_title}")
-            wiki_data = scrape_wikipedia_page(series_data)
-            series_data.update(wiki_data)
-            data.append(series_data)
-        except Exception:
-            print(
-                f"\nError: Something went wrong when scraping Wikipedia page for title {imdb_title}.\n"
-            )
-            raise
-
-    return data
+def scrape_wikipedia_from_data_imdb_trakt(data):
+    # id_whitelist = ["tt12392504"]
+    id_whitelist = []
+    # id_blacklist = []
+    return for_loop_scrape_logic(
+        "wiki", scrape_wikipedia_page, data, id_whitelist=id_whitelist
+    )
