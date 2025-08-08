@@ -2,9 +2,9 @@ import json
 import csv
 
 
-from main.debug import execute_and_time
+from main.debug import execute_and_time, pp  # noqa: F401
 
-from main.cache.cache import save_cache, load_cache, delete_cache_no_error
+from main.cache.cache import save_cache, load_cache, delete_cache_from_list_no_error
 
 from main.vars import OUTPUT_FOLDER_PATH, CACHE_NAMES_SORTED
 
@@ -25,19 +25,19 @@ def get_biggest_stored_dataset():
 
 def get_full_data_from_toptv_shows(fresh=False):
     if fresh:
-        delete_cache_no_error(CACHE_NAMES_SORTED)
+        delete_cache_from_list_no_error(CACHE_NAMES_SORTED)
 
     # ## Scrape IMDB
     data = get_biggest_stored_dataset()
     data_imdb = execute_and_time(scrape_imdb_toptv, data)
     save_cache("data_imdb", data_imdb)
 
-    ## Scrape Trakt
+    # ## Scrape Trakt
     data = get_biggest_stored_dataset()
     data_imdb_trakt = execute_and_time(scrape_trakt_from_data_imdb, data)
     save_cache("data_imdb_trakt", data_imdb_trakt)
 
-    ## Scrape Wikipedia
+    # ## Scrape Wikipedia
     data = get_biggest_stored_dataset()
     data_imdb_trakt_wiki = execute_and_time(scrape_wikipedia_from_data_imdb_trakt, data)
     save_cache("data_imdb_trakt_wiki", data_imdb_trakt_wiki)
@@ -49,9 +49,15 @@ def get_full_data_from_toptv_shows(fresh=False):
 
 
 def main():
-    # full_data = get_full_data_from_toptv_shows(fresh=True)
-    full_data = get_full_data_from_toptv_shows()
+    full_data = get_full_data_from_toptv_shows(fresh=True)
+    # full_data = get_full_data_from_toptv_shows()
 
+    # ## Write FULL DATA to JSON file
+    json_output_file = OUTPUT_FOLDER_PATH / "toptv_shows_full_data.json"
+    with open(json_output_file, "w", encoding="utf-8") as f:
+        json.dump(full_data, f, indent=4, ensure_ascii=False)
+
+    # ## Write ONLY DATA TO BE PARSED to CSV file
     FULL_DATA_KEYS_TO_REMOVE = ["imdb_id", "trakt_title", "trakt_wiki_link"]
 
     # strip the unecessary data used for debugging/acquiring data
@@ -60,12 +66,6 @@ def main():
             if key in d:
                 d.pop(key, None)
 
-    # ## Write to JSON file
-    json_output_file = OUTPUT_FOLDER_PATH / "toptv_shows_full_data.json"
-    with open(json_output_file, "w", encoding="utf-8") as f:
-        json.dump(full_data, f, indent=4, ensure_ascii=False)
-
-    # ## Write to CSV file
     csv_output_file = OUTPUT_FOLDER_PATH / "toptv_shows_full_data.csv"
     with open(csv_output_file, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=full_data[0].keys())

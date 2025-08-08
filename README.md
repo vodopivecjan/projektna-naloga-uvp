@@ -8,3 +8,5 @@ kateriji medijski kanali odobrijo in prenašajo, katera prudukcijska podjetja so
 in pa tudi potem malo bolj splošno, kateri žanri os najbolj gledani,
 iz katerih držav je najbolj gledano in katera država je naredila
 največ serij, leta najpopularnejših serij in podobne stvari.
+
+Program vzame priblizno 8 minut da pobere vse podatke iz spleta

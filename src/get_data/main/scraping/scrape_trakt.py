@@ -240,7 +240,7 @@ def scrape_trakt_page(series_data, iteration):
     # ## Extract series regulars
     trakt_series_regulars = []
     for actor in soup.select("#series-regulars-actors li[itemprop='actor']"):
-        name = actor.select_one(".name").text.strip()
+        name = actor.select_one(".name").text.strip().replace("\u0131", "i")
         trakt_series_regulars.append(name)
 
     # ## Number of seasons
@@ -254,7 +254,7 @@ def scrape_trakt_page(series_data, iteration):
     max_guest_stars = 15
     trakt_guest_stars = []
     for actor in soup.select("#guest-stars-actors li[itemprop='actor']"):
-        name = actor.select_one(".name").text.strip()
+        name = actor.select_one(".name").text.strip().replace("\u0131", "i")
         trakt_guest_stars.append(name)
         # Stop after collecting max_guest_stars names
         if len(trakt_guest_stars) >= max_guest_stars:
@@ -278,9 +278,10 @@ def scrape_trakt_page(series_data, iteration):
 
 
 def scrape_trakt_from_data_imdb(data):
+    id_whitelist = []
     # id_whitelist = ["tt1533395"] # Life 2009 series also has a movie with same imdb id
     # id_whitelist = ["tt1628033"] # Top Gear 2002 series also has a korean version with same imdb id
-    id_whitelist = []
+    # id_whitelist = ["tt0795176"] # Planet Earth 2006
     return for_loop_scrape_logic(
         "trakt", scrape_trakt_page, data, id_whitelist=id_whitelist
     )
