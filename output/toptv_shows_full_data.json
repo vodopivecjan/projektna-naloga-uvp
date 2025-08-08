@@ -155,9 +155,9 @@
         "imdb_year_end": "2006",
         "trakt_title": "Planet Earth",
         "trakt_rating_imdb": "9.4",
-        "trakt_vote_count_imdb": "228,000",
+        "trakt_vote_count_imdb": "229,000",
         "trakt_full_runtime_min": "560",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "538",
         "trakt_networks": [
             "BBC One"
         ],
@@ -869,7 +869,7 @@
         "trakt_rating_imdb": "9.2",
         "trakt_vote_count_imdb": "2,500,000",
         "trakt_full_runtime_min": "4,232",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "57",
         "trakt_networks": [
             "HBO"
         ],
@@ -1728,7 +1728,7 @@
         "trakt_rating_imdb": "9.0",
         "trakt_vote_count_imdb": "129,000",
         "trakt_full_runtime_min": "1,870",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "23",
         "trakt_networks": [
             "FOX",
             "Fox Kids"
@@ -1974,7 +1974,7 @@
         "trakt_rating_imdb": "9.0",
         "trakt_vote_count_imdb": "784,000",
         "trakt_full_runtime_min": "4,463",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "22",
         "trakt_networks": [
             "NBC"
         ],
@@ -2924,9 +2924,9 @@
         "imdb_year_end": "1998",
         "trakt_title": "Seinfeld",
         "trakt_rating_imdb": "8.9",
-        "trakt_vote_count_imdb": "370,000",
+        "trakt_vote_count_imdb": "372,000",
         "trakt_full_runtime_min": "4,314",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "22",
         "trakt_networks": [
             "NBC"
         ],
@@ -4117,7 +4117,7 @@
         "trakt_rating_imdb": "8.9",
         "trakt_vote_count_imdb": "1,200,000",
         "trakt_full_runtime_min": "5,408",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "22",
         "trakt_networks": [
             "NBC"
         ],
@@ -4193,7 +4193,7 @@
         "trakt_rating_imdb": "8.8",
         "trakt_vote_count_imdb": "101,000",
         "trakt_full_runtime_min": "11,050",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "30",
         "trakt_networks": [
             "HBO"
         ],
@@ -4260,7 +4260,7 @@
         "trakt_rating_imdb": "8.8",
         "trakt_vote_count_imdb": "269,000",
         "trakt_full_runtime_min": "3,830",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "22",
         "trakt_networks": [
             "FXX"
         ],
@@ -4708,7 +4708,7 @@
         "trakt_rating_imdb": "8.8",
         "trakt_vote_count_imdb": "159,000",
         "trakt_full_runtime_min": "3,961",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "28",
         "trakt_networks": [
             "HBO"
         ],
@@ -5773,7 +5773,7 @@
         "trakt_rating_imdb": "8.7",
         "trakt_vote_count_imdb": "233,000",
         "trakt_full_runtime_min": "2,560",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "1",
         "trakt_networks": [
             "ABC",
             "Showtime"
@@ -6159,7 +6159,7 @@
         "imdb_year_end": "1976",
         "trakt_title": "I, Claudius",
         "trakt_rating_imdb": "8.8",
-        "trakt_vote_count_imdb": "21,000",
+        "trakt_vote_count_imdb": "21,200",
         "trakt_full_runtime_min": "695",
         "trakt_avg_ep_runtime_min": "55",
         "trakt_networks": [
@@ -6622,7 +6622,7 @@
         "trakt_rating_imdb": "8.7",
         "trakt_vote_count_imdb": "703,000",
         "trakt_full_runtime_min": "1,925",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "60",
         "trakt_networks": [
             "Netflix"
         ],
@@ -7360,7 +7360,7 @@
         "trakt_rating_imdb": "8.7",
         "trakt_vote_count_imdb": "499,000",
         "trakt_full_runtime_min": "1,465",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "60",
         "trakt_networks": [
             "Netflix"
         ],
@@ -9530,7 +9530,7 @@
         "trakt_rating_imdb": "8.6",
         "trakt_vote_count_imdb": "1,500,000",
         "trakt_full_runtime_min": "2,094",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "51",
         "trakt_networks": [
             "Netflix"
         ],
@@ -10598,7 +10598,7 @@
         "trakt_rating_imdb": "8.6",
         "trakt_vote_count_imdb": "264,000",
         "trakt_full_runtime_min": "9,776",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "45",
         "trakt_networks": [
             "FOX"
         ],
@@ -11229,7 +11229,7 @@
         "trakt_rating_imdb": "8.6",
         "trakt_vote_count_imdb": "272,000",
         "trakt_full_runtime_min": "3,341",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "58",
         "trakt_networks": [
             "Netflix"
         ],
@@ -11400,7 +11400,7 @@
         "trakt_rating_imdb": "8.6",
         "trakt_vote_count_imdb": "510,000",
         "trakt_full_runtime_min": "2,100",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "54",
         "trakt_networks": [
             "Netflix"
         ],
@@ -12906,38 +12906,8 @@
         "wiki_editors": "N.A."
     },
     {
-        "imdb_title": "Blackadder the Third",
-        "imdb_rank_toptv": 165,
-        "imdb_id": "tt0092324",
-        "imdb_series_type": "TV Series",
-        "imdb_ongoing": "No",
-        "imdb_year_start": "1987",
-        "imdb_year_end": "1987",
-        "trakt_title": "N.A.",
-        "trakt_rating_imdb": "N.A.",
-        "trakt_vote_count_imdb": "N.A.",
-        "trakt_full_runtime_min": "N.A.",
-        "trakt_avg_ep_runtime_min": "N.A.",
-        "trakt_networks": "N.A.",
-        "trakt_country_of_origin": "N.A.",
-        "trakt_genres": "N.A.",
-        "trakt_studios": "N.A.",
-        "trakt_creators": "N.A.",
-        "trakt_num_of_episodes": "N.A.",
-        "trakt_num_of_seasons": "N.A.",
-        "trakt_series_regulars": "N.A.",
-        "trakt_guest_stars": "N.A.",
-        "trakt_wiki_link": "N.A.",
-        "wiki_created_by": "N.A.",
-        "wiki_written_by": "N.A.",
-        "wiki_executive_producers": "N.A.",
-        "wiki_producers": "N.A.",
-        "wiki_cinematography": "N.A.",
-        "wiki_editors": "N.A."
-    },
-    {
         "imdb_title": "Scavengers Reign",
-        "imdb_rank_toptv": 166,
+        "imdb_rank_toptv": 165,
         "imdb_id": "tt21056886",
         "imdb_series_type": "TV Mini Series",
         "imdb_ongoing": "No",
@@ -13003,6 +12973,36 @@
         "wiki_editors": [
             "Jason Klein"
         ]
+    },
+    {
+        "imdb_title": "Blackadder the Third",
+        "imdb_rank_toptv": 166,
+        "imdb_id": "tt0092324",
+        "imdb_series_type": "TV Series",
+        "imdb_ongoing": "No",
+        "imdb_year_start": "1987",
+        "imdb_year_end": "1987",
+        "trakt_title": "N.A.",
+        "trakt_rating_imdb": "N.A.",
+        "trakt_vote_count_imdb": "N.A.",
+        "trakt_full_runtime_min": "N.A.",
+        "trakt_avg_ep_runtime_min": "N.A.",
+        "trakt_networks": "N.A.",
+        "trakt_country_of_origin": "N.A.",
+        "trakt_genres": "N.A.",
+        "trakt_studios": "N.A.",
+        "trakt_creators": "N.A.",
+        "trakt_num_of_episodes": "N.A.",
+        "trakt_num_of_seasons": "N.A.",
+        "trakt_series_regulars": "N.A.",
+        "trakt_guest_stars": "N.A.",
+        "trakt_wiki_link": "N.A.",
+        "wiki_created_by": "N.A.",
+        "wiki_written_by": "N.A.",
+        "wiki_executive_producers": "N.A.",
+        "wiki_producers": "N.A.",
+        "wiki_cinematography": "N.A.",
+        "wiki_editors": "N.A."
     },
     {
         "imdb_title": "Greatest Events of WWII in Colour",
@@ -13482,7 +13482,7 @@
         "trakt_rating_imdb": "9.1",
         "trakt_vote_count_imdb": "13,900",
         "trakt_full_runtime_min": "91,541",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "180",
         "trakt_networks": [
             "Alpha"
         ],
@@ -14108,8 +14108,90 @@
         ]
     },
     {
-        "imdb_title": "QI",
+        "imdb_title": "Young Justice",
         "imdb_rank_toptv": 181,
+        "imdb_id": "tt1641384",
+        "imdb_series_type": "TV Series",
+        "imdb_ongoing": "No",
+        "imdb_year_start": "2010",
+        "imdb_year_end": "2022",
+        "trakt_title": "Young Justice",
+        "trakt_rating_imdb": "8.6",
+        "trakt_vote_count_imdb": "48,800",
+        "trakt_full_runtime_min": "2,266",
+        "trakt_avg_ep_runtime_min": "22",
+        "trakt_networks": [
+            "Cartoon Network",
+            "DC Universe",
+            "HBO Max"
+        ],
+        "trakt_country_of_origin": "United States",
+        "trakt_genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Superhero",
+            "Fantasy",
+            "Science Fiction"
+        ],
+        "trakt_studios": [
+            "Warner Bros. Animation",
+            "DC Entertainment",
+            "DC Comics"
+        ],
+        "trakt_creators": "Greg Weisman",
+        "trakt_num_of_episodes": "98",
+        "trakt_num_of_seasons": "4",
+        "trakt_series_regulars": [
+            "Jesse McCartney",
+            "Nolan North",
+            "Danica McKellar",
+            "Stephanie Lemelin",
+            "Khary Payton",
+            "Greg Cipes",
+            "Zehra Fazal",
+            "Lacey Chabert",
+            "Troy Baker",
+            "Denise Boutte",
+            "Jason Spisak",
+            "Eric Lopez"
+        ],
+        "trakt_guest_stars": [
+            "Nolan North",
+            "Khary Payton",
+            "Kevin Michael Richardson",
+            "Bruce Greenwood",
+            "Phil LaMarr",
+            "Crispin Freeman",
+            "Jason Spisak",
+            "Grey DeLisle",
+            "Stephanie Lemelin",
+            "Zehra Fazal",
+            "Masasa Moyo",
+            "Yuri Lowenthal",
+            "Troy Baker",
+            "Jason Marsden",
+            "Vanessa Marshall"
+        ],
+        "trakt_wiki_link": "shows/young-justice/wikipedia",
+        "wiki_created_by": "N.A.",
+        "wiki_written_by": "N.A.",
+        "wiki_executive_producers": [
+            "Sam Register",
+            "Brandon Vietti",
+            "Greg Weisman"
+        ],
+        "wiki_producers": [
+            "Brandon Vietti",
+            "Greg Weisman",
+            "Leanne Moreau"
+        ],
+        "wiki_cinematography": "N.A.",
+        "wiki_editors": "N.A."
+    },
+    {
+        "imdb_title": "QI",
+        "imdb_rank_toptv": 182,
         "imdb_id": "tt0380136",
         "imdb_series_type": "TV Series",
         "imdb_ongoing": "Yes",
@@ -14176,7 +14258,7 @@
     },
     {
         "imdb_title": "Andor",
-        "imdb_rank_toptv": 182,
+        "imdb_rank_toptv": 183,
         "imdb_id": "tt9253284",
         "imdb_series_type": "TV Series",
         "imdb_ongoing": "No",
@@ -14270,88 +14352,6 @@
         ]
     },
     {
-        "imdb_title": "Young Justice",
-        "imdb_rank_toptv": 183,
-        "imdb_id": "tt1641384",
-        "imdb_series_type": "TV Series",
-        "imdb_ongoing": "No",
-        "imdb_year_start": "2010",
-        "imdb_year_end": "2022",
-        "trakt_title": "Young Justice",
-        "trakt_rating_imdb": "8.6",
-        "trakt_vote_count_imdb": "48,800",
-        "trakt_full_runtime_min": "2,266",
-        "trakt_avg_ep_runtime_min": "22",
-        "trakt_networks": [
-            "Cartoon Network",
-            "DC Universe",
-            "HBO Max"
-        ],
-        "trakt_country_of_origin": "United States",
-        "trakt_genres": [
-            "Animation",
-            "Action",
-            "Adventure",
-            "Superhero",
-            "Fantasy",
-            "Science Fiction"
-        ],
-        "trakt_studios": [
-            "Warner Bros. Animation",
-            "DC Entertainment",
-            "DC Comics"
-        ],
-        "trakt_creators": "Greg Weisman",
-        "trakt_num_of_episodes": "98",
-        "trakt_num_of_seasons": "4",
-        "trakt_series_regulars": [
-            "Jesse McCartney",
-            "Nolan North",
-            "Danica McKellar",
-            "Stephanie Lemelin",
-            "Khary Payton",
-            "Greg Cipes",
-            "Zehra Fazal",
-            "Lacey Chabert",
-            "Troy Baker",
-            "Denise Boutte",
-            "Jason Spisak",
-            "Eric Lopez"
-        ],
-        "trakt_guest_stars": [
-            "Nolan North",
-            "Khary Payton",
-            "Kevin Michael Richardson",
-            "Bruce Greenwood",
-            "Phil LaMarr",
-            "Crispin Freeman",
-            "Jason Spisak",
-            "Grey DeLisle",
-            "Stephanie Lemelin",
-            "Zehra Fazal",
-            "Masasa Moyo",
-            "Yuri Lowenthal",
-            "Troy Baker",
-            "Jason Marsden",
-            "Vanessa Marshall"
-        ],
-        "trakt_wiki_link": "shows/young-justice/wikipedia",
-        "wiki_created_by": "N.A.",
-        "wiki_written_by": "N.A.",
-        "wiki_executive_producers": [
-            "Sam Register",
-            "Brandon Vietti",
-            "Greg Weisman"
-        ],
-        "wiki_producers": [
-            "Brandon Vietti",
-            "Greg Weisman",
-            "Leanne Moreau"
-        ],
-        "wiki_cinematography": "N.A.",
-        "wiki_editors": "N.A."
-    },
-    {
         "imdb_title": "Demon Slayer: Kimetsu no Yaiba",
         "imdb_rank_toptv": 184,
         "imdb_id": "tt9335498",
@@ -14363,7 +14363,7 @@
         "trakt_rating_imdb": "8.6",
         "trakt_vote_count_imdb": "194,000",
         "trakt_full_runtime_min": "1,617",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "25",
         "trakt_networks": [
             "Tokyo MX",
             "GTV",
@@ -15669,7 +15669,7 @@
         "trakt_rating_imdb": "8.5",
         "trakt_vote_count_imdb": "446,000",
         "trakt_full_runtime_min": "2,225",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "49",
         "trakt_networks": [
             "USA Network"
         ],
@@ -16791,7 +16791,7 @@
         "trakt_rating_imdb": "8.6",
         "trakt_vote_count_imdb": "283,000",
         "trakt_full_runtime_min": "2,712",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "60",
         "trakt_networks": [
             "Paramount Network"
         ],
@@ -17668,7 +17668,7 @@
         "trakt_rating_imdb": "8.5",
         "trakt_vote_count_imdb": "129,000",
         "trakt_full_runtime_min": "350",
-        "trakt_avg_ep_runtime_min": "42",
+        "trakt_avg_ep_runtime_min": "1",
         "trakt_networks": [
             "BBC Two"
         ],

@@ -1,7 +1,10 @@
 import ast
-import matplotlib.pyplot as plt
-from matplotlib_venn import venn3
 from collections import defaultdict, Counter
+from matplotlib_venn import venn3
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "DejaVu Sans"
+
 
 def plot_involved_people(df):
     # Naredi kopijo, da ne spreminjaš originala
@@ -40,7 +43,7 @@ def plot_involved_people(df):
     plt.figure(figsize=(10, 8))
     venn3(
         [igralci, ustvarjalci, produkcija],
-        set_labels=("Igralci", "Ustvarjalci", "Produkcija")
+        set_labels=("Igralci", "Ustvarjalci", "Produkcija"),
     )
     plt.title("Prekrivanje oseb po vlogah v produkciji serij")
     plt.show()
@@ -59,16 +62,20 @@ def plot_number_of_apperances_for_people_in_groups(df):
         return set()
 
     osebe_po_skupinah = {
-        'igralci': defaultdict(set),
-        'ustvarjalci': defaultdict(set),
-        'produkcija': defaultdict(set)
+        "igralci": defaultdict(set),
+        "ustvarjalci": defaultdict(set),
+        "produkcija": defaultdict(set),
     }
 
     for _, row in df.iterrows():
         title = row.get("imdb_title", "N.A.")
 
-        igralci = parse_list(row.get("trakt_series_regulars", "")) | parse_list(row.get("trakt_guest_stars", ""))
-        ustvarjalci = parse_list(row.get("wiki_created_by", "")) | parse_list(row.get("wiki_written_by", ""))
+        igralci = parse_list(row.get("trakt_series_regulars", "")) | parse_list(
+            row.get("trakt_guest_stars", "")
+        )
+        ustvarjalci = parse_list(row.get("wiki_created_by", "")) | parse_list(
+            row.get("wiki_written_by", "")
+        )
         produkcija = (
             parse_list(row.get("wiki_producers", ""))
             | parse_list(row.get("wiki_executive_producers", ""))
@@ -76,9 +83,9 @@ def plot_number_of_apperances_for_people_in_groups(df):
             | parse_list(row.get("wiki_cinematography", ""))
         )
 
-        osebe_po_skupinah['igralci'][title] = igralci
-        osebe_po_skupinah['ustvarjalci'][title] = ustvarjalci
-        osebe_po_skupinah['produkcija'][title] = produkcija
+        osebe_po_skupinah["igralci"][title] = igralci
+        osebe_po_skupinah["ustvarjalci"][title] = ustvarjalci
+        osebe_po_skupinah["produkcija"][title] = produkcija
 
     rezultati = {}
     for skupina, serije_dict in osebe_po_skupinah.items():
@@ -94,9 +101,8 @@ def plot_number_of_apperances_for_people_in_groups(df):
         osebe, stevila = zip(*top_30) if top_30 else ([], [])
         plt.figure(figsize=(11, 8))
         plt.barh(osebe, stevila)
-        plt.title(f"Top 30 oseb v skupini '{skupina}' po številu različnih serij")
+        plt.title(f"30 oseb v skupini '{skupina}' ki se največkrat pojavijo pri različnih serijah")
         plt.xlabel("Število serij")
         plt.gca().invert_yaxis()
         plt.tight_layout()
         plt.show()
-

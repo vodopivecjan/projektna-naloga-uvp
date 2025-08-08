@@ -1,6 +1,7 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import ast
+import matplotlib.pyplot as plt
+plt.rcParams["font.family"] = "DejaVu Sans"
 
 
 def plot_genres_years(df):
@@ -47,7 +48,7 @@ def plot_genres_years(df):
     # Nariši stacked bar chart (naloženi stolpični diagram :))
     tabela.plot(kind="bar", stacked=True, figsize=(16, 8))
     plt.xlabel("Leto")
-    plt.ylabel("Število serij po žanrih (ena serija v stolpcu šteje večkrat)")
+    plt.ylabel("Število serij po žanrih (ena serija se lahko v stolpcu šteje večkrat)")
     plt.title("Žanri po letih (seštevek vseh aktivnih serij tisti leto)")
     plt.legend(title="Žanr")
     plt.tight_layout()

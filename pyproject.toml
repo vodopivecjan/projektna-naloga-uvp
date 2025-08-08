@@ -7,20 +7,12 @@ requires-python = ">=3.13"
 dependencies = [
   "beautifulsoup4>=4.13.4",
   "jupyter>=1.1.1",
-  "matplotlib>=3.10.5",
   "matplotlib-venn>=1.1.2",
+  "matplotlib>=3.10.5",
   "pandas>=2.3.1",
   "playwright>=1.53.0",
   "plotly>=6.2.0",
   "requests>=2.32.4",
   "seaborn>=0.13.2",
 ]
-
-# [tool.ruff.lint]
-# ignore = ["F401"]  # allow unused imports
-
-# [dependency-groups]
-# dev = [
-#     "decompyle3>=3.9.2",
-# ]
 
