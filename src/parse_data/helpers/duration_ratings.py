@@ -5,6 +5,7 @@ from collections import OrderedDict
 
 
 def compare_runtime_votes_ratings_normalized_axis(df):
+    # Naredi kopijo, da ne spreminjaš originala
     df = df.copy()
 
     # Pretvori čas trajanja iz stringa v število (če vsebuje "N.A." ali vejice)
@@ -30,7 +31,7 @@ def compare_runtime_votes_ratings_normalized_axis(df):
     # Pretvori čas iz minut v ure
     df["trajanje_ure"] = df["trakt_full_runtime_min"] / 60
 
-    # Popup formatted
+    # Popup formatirane ure podatek
     df["trajanje_ure_1dec"] = df["trajanje_ure"].round(1).astype(str) + "h"
 
     # Nariši graf z uporabo Plotly
@@ -39,7 +40,7 @@ def compare_runtime_votes_ratings_normalized_axis(df):
         x="trajanje_ure",
         y="trakt_vote_count_imdb",
         color="trakt_rating_imdb",
-        hover_name="imdb_title",  # Naslov serije ob lebdenju
+        hover_name="imdb_title",
         hover_data={
             "trajanje_ure_1dec": True,
             "trakt_vote_count_imdb": True,
@@ -60,8 +61,7 @@ def compare_runtime_votes_ratings_normalized_axis(df):
 
 
 def compare_runtime_votes_ratings_non_normalized_axis(df):
-    from collections import OrderedDict
-
+    # Naredi kopijo, da ne spreminjaš originala
     df = df.copy()
 
     def pretvori_minute(x):
@@ -79,11 +79,11 @@ def compare_runtime_votes_ratings_non_normalized_axis(df):
 
     df["trajanje_ure"] = df["trakt_full_runtime_min"] / 60
 
-    # Log1p transform, slightly stretched on X
+    # Log1p transformacija, in za potem na x-osi za malenkost raztegnjena
     df["vote_log"] = np.log1p(df["trakt_vote_count_imdb"])
-    df["runtime_log"] = np.log1p(df["trajanje_ure"]) * 1.2  # less compression on left
+    df["runtime_log"] = np.log1p(df["trajanje_ure"]) * 1.2
 
-    # Popup formatted
+    # Popup formatirane ure podatek
     df["trajanje_ure_1dec"] = df["trajanje_ure"].round(1).astype(str) + "h"
 
     def format_votes(v):
@@ -152,7 +152,7 @@ def compare_runtime_votes_ratings_non_normalized_axis(df):
             ticktext=vote_tick_labels,
             title="Število glasov (v tisočicah ali milijonih)",
         ),
-        xaxis_tickangle=0,  # keep x labels horizontal
+        xaxis_tickangle=0,  # pusti nazive v x osi horizontalne
         width=1600,
         height=800,
     )
@@ -161,9 +161,10 @@ def compare_runtime_votes_ratings_non_normalized_axis(df):
 
 
 def compare_avg_ep_runtime_votes_ratings_normalized_axis(df):
+    # Naredi kopijo, da ne spreminjaš originala
     df = df.copy()
 
-    # Pretvori čas trajanja iz stringa v število (če vsebuje "N.A." ali vejice)
+    # Pretvori čas trajanja iz str v število (če vsebuje "N.A." ali vejice)
     def pretvori_minute(x):
         if isinstance(x, str) and x.strip() == "N.A.":
             return np.nan
@@ -180,7 +181,7 @@ def compare_avg_ep_runtime_votes_ratings_normalized_axis(df):
 
     # Odstrani res dolge šove (1% najdlje trajajoči), ker če ne,
     # se na normaliziranem traku čisto preveč raztegne
-    runtime_99 = df["trakt_avg_ep_runtime_min"].quantile(0.99)
+    runtime_99 = df["trakt_avg_ep_runtime_min"].quantile(0.97)
     df = df[df["trakt_avg_ep_runtime_min"] <= runtime_99]
 
 
@@ -190,7 +191,7 @@ def compare_avg_ep_runtime_votes_ratings_normalized_axis(df):
         x="trakt_avg_ep_runtime_min",
         y="trakt_vote_count_imdb",
         color="trakt_rating_imdb",
-        hover_name="imdb_title",  # Naslov serije ob lebdenju
+        hover_name="imdb_title",
         hover_data={
             "trakt_avg_ep_runtime_min": True,
             "trakt_vote_count_imdb": True,

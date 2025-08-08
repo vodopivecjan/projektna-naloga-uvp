@@ -49,8 +49,8 @@ def get_full_data_from_toptv_shows(fresh=False):
 
 
 def main():
-    full_data = get_full_data_from_toptv_shows(fresh=True)
-    # full_data = get_full_data_from_toptv_shows()
+    # full_data = get_full_data_from_toptv_shows(fresh=True)
+    full_data = get_full_data_from_toptv_shows()
 
     # ## Write FULL DATA to JSON file
     json_output_file = OUTPUT_FOLDER_PATH / "toptv_shows_full_data.json"

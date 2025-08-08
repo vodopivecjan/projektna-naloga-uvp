@@ -8,6 +8,7 @@ dependencies = [
   "beautifulsoup4>=4.13.4",
   "jupyter>=1.1.1",
   "matplotlib>=3.10.5",
+  "matplotlib-venn>=1.1.2",
   "pandas>=2.3.1",
   "playwright>=1.53.0",
   "plotly>=6.2.0",
